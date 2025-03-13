@@ -1,7 +1,12 @@
 export async function start (details = {}) {
   try {
+    let mod;
+
     await startSocket ();
-    await createApp ();
+    mod = await import ('./app/start.js');
+    if (mod.startApp) {
+      await mod.startApp ();
+    }
   }
   catch (err) {
     console.error (err);
@@ -26,34 +31,4 @@ export async function startSocket (details = {}) {
       window.location.reload ();
     }
   });
-}
-
-// ----------------------------------------------------------------------
-// App
-import '/script/library/object-path/start.js';
-import '/script/library/axios/start.js';
-import '/script/library/route-recognizer/start.js';
-import '/script/library/dayjs/start.js';
-import '/script/library/simulacra/start.js';
-
-import Mustache from '/script/library/mustache/start.js';
-
-export async function createApp (details = {}) {
-  const { axios, dayjs, Navigo, objectPath, routie, } = window;
-  let result, router;
-
-  console.log ('- started app', window);
-
-  router = new RouteRecognizer ();
-  router.add ([
-    {
-      path: '/users/bob',
-      handler: function () {
-        console.log ('wow it works...');
-      }
-    },
-  ]);
-
-  result = router.recognize ('/users/bob');
-  console.log ('WHAT:', result);
 }
