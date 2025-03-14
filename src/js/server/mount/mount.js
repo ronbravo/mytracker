@@ -37,6 +37,7 @@ export async function serveStaticContent (details = {}) {
   app.data.root = root;
 
   server.use (serveStatic (join (root, 'public')));
+  server.use (serveStatic (join (root, 'package')));
   server.use (serveStatic (join (root, 'src', 'js', 'browser')));
 
   // Handle all other routes by sending the index.html file
@@ -80,6 +81,7 @@ export async function watchForFileChanges (details = {}) {
   osname = platform ();
   chokidar.watch ([
     join (root, 'public'),
+    join (root, 'package'),
     join (root, 'src', 'js', 'browser'),
   ], {
     ignoreInitial: true,
