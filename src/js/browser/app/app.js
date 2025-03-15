@@ -4,11 +4,12 @@
 const NOTHING_ITEM  = '(nothing)';
 const SELF_ITEM     = '(self)';
 
-const ITEM_KIND           = 'graceful/core/item';
-const LIST_ITEM_KIND      = 'graceful/core/list';
-const NUMBER_ITEM_KIND    = 'graceful/core/number';
-const TEXT_ITEM_KIND      = 'graceful/core/text';
-const ERROR_ITEM_KIND     = 'graceful/core/error';
+const ITEM_KIND               = 'graceful/core/item';
+const LIST_ITEM_KIND          = 'graceful/core/list';
+const NUMBER_ITEM_KIND        = 'graceful/core/number';
+const TEXT_ITEM_KIND          = 'graceful/core/text';
+const ERROR_ITEM_KIND         = 'graceful/core/error';
+const ENVIRONMENT_ITEM_KIND   = 'graceful/core/environment';
 
 async function destroyItem (details = {}) {}
 
@@ -81,8 +82,9 @@ async function getEnvironment (details = {}) {
   let area;
   
   if (!root) {
-    root = await createItem ({ 
+    root = await createItem ({
       data: { name: 'root environment' },
+      kind: ENVIRONMENT_ITEM_KIND,
     });
     console.log ('ROOT:', JSON.stringify (root, null, 2));
   }
